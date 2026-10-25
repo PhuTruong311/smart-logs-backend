@@ -2,10 +2,10 @@ from fastapi import APIRouter, status
 from app.schemas.route import (
     RoutePredictionRequest,
     RoutePredictionResponse,
-    CandidateRoute,
     RealtimeETAUpdateRequest,
     RealtimeETAUpdateResponse
 )
+from app.services.route_selector import evaluate_and_select_route
 from datetime import timedelta
 
 router = APIRouter()
@@ -14,37 +14,29 @@ router = APIRouter()
     "/routes/predict",
     response_model=RoutePredictionResponse,
     status_code=status.HTTP_200_OK,
-    summary="Dự báo thời gian di chuyển và đề xuất tuyến đường"
+    summary="[Màn hình 2] Dự báo thời gian di chuyển và chọn tuyến tối ưu"
 )
 def predict_route(payload: RoutePredictionRequest):
-    route_a = CandidateRoute(
-        route_id="ROUTE_A",
-        distance_km=7.5,
-        predicted_duration_min=22.3,
-        baseline_duration_min=25.0,
-        geometry="sample_polyline_a"
-    )
-    route_b = CandidateRoute(
-        route_id="ROUTE_B",
-        distance_km=8.2,
-        predicted_duration_min=28.1,
-        baseline_duration_min=30.0,
-        geometry="sample_polyline_b"
+    # Gọi module ghép thuật toán chọn tuyến tối ưu
+    best_id, candidate_routes, selection_reason = evaluate_and_select_route(
+        payload.origin, 
+        payload.destination
     )
     
     return RoutePredictionResponse(
-        recommended_route_id="ROUTE_A",
-        candidate_routes=[route_a, route_b],
-        selection_reason="Tuyến có ETA ngắn nhất (22.3 phút)"
+        recommended_route_id=best_id,
+        candidate_routes=candidate_routes,
+        selection_reason=selection_reason
     )
 
 @router.post(
     "/routes/update-eta",
     response_model=RealtimeETAUpdateResponse,
     status_code=status.HTTP_200_OK,
-    summary="Cập nhật ETA Realtime theo GPS"
+    summary="[Màn hình 3] Cập nhật ETA Realtime theo vị trí GPS"
 )
 def update_realtime_eta(payload: RealtimeETAUpdateRequest):
+    # Logic giả định tính lại ETA thời gian thực khi xe đang di chuyển
     updated_eta = 11.2
     arrival_time = payload.timestamp + timedelta(minutes=updated_eta)
     
