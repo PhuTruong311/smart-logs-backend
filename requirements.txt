@@ -1,5 +1,7 @@
-fastapi>=0.100.0
-uvicorn>=0.22.0
-pydantic>=2.0
-pytest>=7.0.0
-httpx>=0.24.0
+fastapi
+uvicorn
+pydantic
+joblib
+scikit-learn
+pandas
+pytest

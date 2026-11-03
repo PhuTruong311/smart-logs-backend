@@ -1,34 +1,32 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Optional
-from datetime import datetime
 
 class Location(BaseModel):
-    lat: float = Field(..., example=10.7769, description="Vĩ độ")
-    lng: float = Field(..., example=106.7009, description="Kinh độ")
+    lat: float
+    lng: float
 
-class RoutePredictionRequest(BaseModel):
+# Class phục vụ cho route_selector.py
+class CandidateRoute(BaseModel):
+    route_id: str
+    distance_km: float
+    predicted_duration_min: float
+    baseline_duration_min: float
+    geometry: Optional[str] = None
+
+# Schemas phục vụ cho 3.5.2 /routes/compare
+class RouteCompareRequest(BaseModel):
     origin: Location
     destination: Location
-    departure_time: Optional[datetime] = Field(default_factory=datetime.utcnow, example="2026-10-20T08:30:00Z")
+    departure_time: Optional[str] = "2026-10-25T08:30:00Z"
 
-class CandidateRoute(BaseModel):
-    route_id: str = Field(..., example="ROUTE_A")
-    distance_km: float = Field(..., example=7.5)
-    predicted_duration_min: float = Field(..., example=22.3)
-    baseline_duration_min: float = Field(..., example=25.0)
-    geometry: str = Field(..., example="sample_polyline_a")
+class RouteCompareItem(BaseModel):
+    route_id: str
+    distance_km: float
+    predicted_eta_min: float
+    source: str
+    status: str
 
-class RoutePredictionResponse(BaseModel):
-    recommended_route_id: str = Field(..., example="ROUTE_A")
-    candidate_routes: List[CandidateRoute]
-    selection_reason: str = Field(..., example="Tuyến có ETA ngắn nhất (22.3 phút)")
-
-class RealtimeETAUpdateRequest(BaseModel):
-    trip_id: str = Field(..., example="TRIP_101")
-    current_location: Location
-    timestamp: datetime = Field(default_factory=datetime.utcnow, example="2026-10-20T08:42:00Z")
-
-class RealtimeETAUpdateResponse(BaseModel):
-    trip_id: str = Field(..., example="TRIP_101")
-    updated_eta_min: float = Field(..., example=11.2)
-    estimated_arrival_time: datetime = Field(..., example="2026-10-20T08:53:12Z")
+class RouteCompareResponse(BaseModel):
+    recommended_route_id: str
+    routes: List[RouteCompareItem]
+    selection_reason: str
