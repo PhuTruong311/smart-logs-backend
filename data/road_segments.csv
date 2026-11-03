@@ -1,0 +1,13 @@
+﻿segment_id,route_id,seq,segment_name,start_lat,start_lon,end_lat,end_lon,road_type,straight_km,length_km_est,osrm_distance_km,osrm_time_min,coord_source,needs_verification
+SEG01,R1,1,Tôn Đức Thắng - đoạn Công trường Mê Linh,10.7691,106.7064,10.776,106.7062,arterial,0.768,1.17,,,manual_approx,1
+SEG02,R1,2,Tôn Đức Thắng - đoạn trước Ba Son,10.776,106.7062,10.7843,106.7064,arterial,0.923,1.38,,,manual_approx,1
+SEG03,R1,3,Tôn Đức Thắng - Nguyễn Hữu Cảnh (cầu Ba Son),10.7843,106.7064,10.7905,106.714,arterial,1.079,1.38,,,manual_approx,1
+SEG04,R1,4,Nguyễn Hữu Cảnh - đoạn về cầu Sài Gòn,10.7905,106.714,10.7975,106.7215,arterial,1.13,1.38,,,manual_approx,1
+SEG05,R2,1,Hai Bà Trưng - đoạn Lê Lợi,10.773,106.7,10.779,106.698,arterial,0.702,1.45,,,manual_approx,1
+SEG06,R2,2,Hai Bà Trưng - đoạn giữa,10.779,106.698,10.786,106.693,arterial,0.951,1.72,,,manual_approx,1
+SEG07,R2,3,Hai Bà Trưng - nút Điện Biên Phủ,10.786,106.693,10.7915,106.701,arterial,1.067,1.72,,,manual_approx,1
+SEG08,R2,4,Điện Biên Phủ - đoạn về cầu Điện Biên Phủ,10.7915,106.701,10.7985,106.7117,arterial,1.404,1.72,,,manual_approx,1
+SEG09,R3,1,Đầu hầm Thủ Thiêm phía Quận 1,10.7712,106.707,10.774,106.711,tunnel_approach,0.537,1.17,,,manual_approx,1
+SEG10,R3,2,Hầm Thủ Thiêm (đoạn dưới sông),10.774,106.711,10.7765,106.715,tunnel,0.518,1.38,,,manual_approx,1
+SEG11,R3,3,Cửa hầm phía Thủ Thiêm,10.7765,106.715,10.78,106.7185,tunnel_approach,0.546,1.38,,,manual_approx,1
+SEG12,R3,4,Đại lộ Mai Chí Thọ - đoạn sau hầm,10.78,106.7185,10.785,106.723,arterial,0.742,1.38,,,manual_approx,1
